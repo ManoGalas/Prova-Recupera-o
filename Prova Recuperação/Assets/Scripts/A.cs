@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class A : MonoBehaviour
 {
+    int  a = 1;
+    int b = 2;
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +26,12 @@ public class A : MonoBehaviour
 
     void SDAD()
     {
+        if(a < b)
+        {
 
 
+        }
+       
     }
 
 }
