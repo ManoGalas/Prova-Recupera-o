@@ -14,5 +14,14 @@ public class b : MonoBehaviour
     void Update()
     {
         Start();
+
+        SDAD();
     }
+
+    void SDAD()
+    {
+
+
+    }
+
 }
