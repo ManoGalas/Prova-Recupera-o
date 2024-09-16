@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviourPun
 
     #endregion
 
+
     public Vector2 ScreenBounds { get => screenBounds; }
 
     const string playerPrefabPath = "Prefabs/Player";
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    void AddScore()
+    public void AddScore()
     {
         int value = 10;
         score = value;
