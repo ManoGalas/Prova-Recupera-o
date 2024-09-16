@@ -11,26 +11,31 @@ public class Apple : MonoBehaviourPun
 {
     const int speed = 5;
     [SerializeField] int score;
-    private Rigidbody rigidbody2D;
+    private Rigidbody2D rigidbody2D;
 
-    public Rigidbody Rb { get => rigidbody2D; set => rigidbody2D = value;}
+    public Rigidbody2D Rb { get => rigidbody2D;}
 
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
         rigidbody2D.velocity = Vector2.down * speed;
 
-        if (transform.position.y < Camera.main.transform.position.y)
+        if (transform.position.y < GameManager.instance.ScreenBounds.y)
         {
             if(photonView.IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);
             }
         }
+    }
+
+    public void DestroyAppleRPC()
+    {
+        photonView.RPC("DestroyApple", RpcTarget.AllBuffered);
     }
 
     [PunRPC]

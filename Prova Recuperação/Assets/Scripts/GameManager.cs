@@ -26,26 +26,25 @@ public class GameManager : MonoBehaviourPun
         {
             Destroy(gameObject); // Destroi o objeto se já houver uma instância existente
         }
-
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         screenBounds += new Vector2(1, -1);
 
         photonView.RPC("AddPlayer", RpcTarget.AllBuffered);
+
     }
 
     #endregion
 
     public Vector2 ScreenBounds { get => screenBounds; }
 
-    const string playerPrefabPath = "Prefabs/Player";
-
+    
     
     // Start is called before the first frame update
 
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -83,7 +82,7 @@ public class GameManager : MonoBehaviourPun
 
     private void CreatePlayer()
     {
-        NetworkManager.instance.Instantiate(playerPrefabPath, new Vector2(0, -4), Quaternion.identity);
+        NetworkManager.instance.Instantiate("Prefabs/Player", new Vector2(0, -4), Quaternion.identity);
     }
 
 
