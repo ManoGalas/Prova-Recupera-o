@@ -17,7 +17,10 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        Spawn();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Spawn();
+        }
     }
 
     void Spawn()
@@ -41,6 +44,12 @@ public class SpawnManager : MonoBehaviour
                 appleSelected = applePrefabs[2];
             }
 
+            float randomX = Random.Range(-8f, 8f);
+            Vector2 spawnPosition = new Vector2(randomX, 6f);
+
+            PhotonNetwork.Instantiate(appleSelected.name, spawnPosition, Quaternion.identity);
+
+            timer = cooldown;
         }
     }
 }
