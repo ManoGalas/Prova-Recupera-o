@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8896827973017509938}
   - component: {fileID: 6534775786784942505}
+  - component: {fileID: 7015478427718306758}
+  - component: {fileID: 2610029118054138692}
+  - component: {fileID: -5231355768924638746}
   m_Layer: 0
   m_Name: "Ma\xE7a Dorada"
   m_TagString: Untagged
@@ -84,3 +87,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7015478427718306758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3490483606230367901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1645a66f4d262a0419bd0ea63548db5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 100
+--- !u!114 &2610029118054138692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3490483606230367901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77d6c8df773b5b4aaef7627ed2251cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applePrefabs:
+  - {fileID: 3490483606230367901}
+  - {fileID: 5731382517998919832, guid: 7132a22cc42137b458ab92c8cf13ded6, type: 3}
+  - {fileID: 6858778817780810259, guid: df2982d90abe6dc4ea653e45e29ce9e8, type: 3}
+--- !u!50 &-5231355768924638746
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3490483606230367901}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
