@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviourPun
     GameManager gameManager;
     Apple apple;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,10 +42,10 @@ public class PlayerController : MonoBehaviourPun
     void Move()
     {
         
-        rb2d.velocity = new Vector2(direction * speed, rb2d.velocity.y);
+        rb2d.velocity = new Vector2(direction * speed, rb2d.velocity.x);
         
         float clampedX = Mathf.Clamp(transform.position.x, GameManager.instance.ScreenBounds.x, GameManager.instance.ScreenBounds.x);
-        transform.position = new Vector2(clampedX, transform.position.y);
+        transform.position = new Vector2(clampedX, transform.position.x);
 
     }
 
