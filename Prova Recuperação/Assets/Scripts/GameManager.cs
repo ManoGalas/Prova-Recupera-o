@@ -9,15 +9,12 @@ public class GameManager : MonoBehaviourPun
     Vector2 screenBounds;
     float score;
     int playersInGame;
-    Text text;
+    Text scoreText;
 
 
     #region Singleton
 
-    // Declara uma instância estática da classe NetworkManager
     public static GameManager instance;
-
-    // Método chamado quando o script é inicializado
     private void Awake()
     {
         // Verifica se a instância é nula
@@ -29,6 +26,11 @@ public class GameManager : MonoBehaviourPun
         {
             Destroy(gameObject); // Destroi o objeto se já houver uma instância existente
         }
+
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        screenBounds += new Vector2(1, -1);
+
+        photonView.RPC("AddPlayer", RpcTarget.AllBuffered);
     }
 
     #endregion
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviourPun
 
     const string playerPrefabPath = "Prefabs/Player";
 
+    
     // Start is called before the first frame update
 
 
@@ -50,16 +53,22 @@ public class GameManager : MonoBehaviourPun
     {
        
     }
+    void AddScoreRPC()
+    {
+        photonView.RPC("AddScore", RpcTarget.AllBuffered);
+    }
+
     [PunRPC]
     void AddScore()
     {
         int value = 10;
         score = value;
         score++;
+        scoreText.text = "Score: " + value.ToString();
     }
     private void AddPlayerRPC()
     {
-        photonView.RPC("AddPlayer", RpcTarget.AllBuffered);
+       
     }
 
     [PunRPC]
@@ -74,10 +83,7 @@ public class GameManager : MonoBehaviourPun
 
     private void CreatePlayer()
     {
-        PlayerController player = NetworkManager.instance.Instantiate(playerPrefabPath, new Vector2(0, -4), Quaternion.identity).GetComponent<PlayerController>();
-        player.photonView.RPC("Initialize", RpcTarget.All);
-
-
+        NetworkManager.instance.Instantiate(playerPrefabPath, new Vector2(0, -4), Quaternion.identity);
     }
 
 
