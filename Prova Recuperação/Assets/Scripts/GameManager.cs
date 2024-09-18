@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviourPun
         {
             Destroy(gameObject); // Destroi o objeto se já houver uma instância existente
         }
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         screenBounds += new Vector2(1, -1);
 
         photonView.RPC("AddPlayer", RpcTarget.AllBuffered);
@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviourPun
     }
 
     #endregion
-
 
     public Vector2 ScreenBounds { get => screenBounds; }
 
@@ -59,20 +58,15 @@ public class GameManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void AddScore()
+    void AddScore(int value)
     {
-        int value = 10;
-        score = value;
-        score++;
-        scoreText.text = "Score: " + value.ToString();
+        score += value;
+        scoreText.text = score.ToString();
     }
-    private void AddPlayerRPC()
-    {
-       
-    }
+    
 
     [PunRPC]
-    private void AddPlayer()
+    void AddPlayer()
     {
         playersInGame++;
         if (playersInGame == PhotonNetwork.PlayerList.Length)
@@ -81,10 +75,11 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
-    private void CreatePlayer()
+    void CreatePlayer()
     {
         NetworkManager.instance.Instantiate("Prefabs/Player", new Vector2(0, -4), Quaternion.identity);
     }
 
+    
 
 }

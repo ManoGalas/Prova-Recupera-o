@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject[] applePrefabs;
+    string[] prefabsPaths = {"Prefabs/ Maça Dourada" , "Prefabs/ Maça Verde", "Prefabs/ Maça Vermelha"};
     private float timer;
     private const float cooldown = 1f;
 
@@ -29,26 +29,22 @@ public class SpawnManager : MonoBehaviour
         if (timer <= 0)
         {
             float appleIndex = Random.Range(0f, 1f);
-            GameObject appleSelected;
+            string appleSelected;
 
-            if (appleIndex <= 0.5f)
+            switch (appleIndex)
             {
-                appleSelected = applePrefabs[0];
-            }
-            else if (appleIndex <= 0.8f)
-            {
-                appleSelected = applePrefabs[1];
-            }
-            else
-            {
-                appleSelected = applePrefabs[2];
+                case < 0.5f:
+                    appleSelected = prefabsPaths[0];
+                    break;
+                case < 0.8f:
+                    appleSelected = prefabsPaths[1];
+                    break;
+                default:
+                    appleSelected = prefabsPaths[2];
+                    break;
             }
 
-            float randomX = Random.Range(-8f, 8f);
-            Vector2 spawnPosition = new Vector2(randomX, 6f);
-
-            PhotonNetwork.Instantiate(appleSelected.name, spawnPosition, Quaternion.identity);
-
+            NetworkManager.instance.Instantiate(appleSelected, new Vector2(Random.Range(-GameManager.instance.ScreenBounds.x, GameManager.instance.ScreenBounds.x), GameManager.instance.ScreenBounds.y), Quaternion.identity);
             timer = cooldown;
         }
     }

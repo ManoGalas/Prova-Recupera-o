@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviourPun
@@ -14,52 +15,46 @@ public class PlayerController : MonoBehaviourPun
     GameManager gameManager;
     Apple apple;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
-        playerLocal = photonView.IsMine;
-
         rb2d = GetComponent<Rigidbody2D>();
+        playerLocal = photonView.IsMine;
 
         if (!playerLocal)
         {
             Color color = Color.white;
             color.a = 0.1f;
+            GetComponent<SpriteRenderer>().color = color;
         }
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {    
         if (playerLocal)
         {
             direction = Input.GetAxis("Horizontal");
-        }
-        Move();
+            Move();
+        }  
     }
 
     void Move()
-    {
-        
-        rb2d.velocity = new Vector2(direction * speed, rb2d.velocity.x);
-        
-        float clampedX = Mathf.Clamp(transform.position.x, GameManager.instance.ScreenBounds.x, GameManager.instance.ScreenBounds.x);
-        transform.position = new Vector2(clampedX, transform.position.x);
+    {  
+        rb2d.velocity = new Vector2(direction * speed,0);
+        Vector2 currentPosition = transform.position;
 
+        currentPosition.x = Mathf.Clamp(currentPosition.x, - GameManager.instance.ScreenBounds.x, GameManager.instance.ScreenBounds.x);
+        transform.position = currentPosition;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Apple") && playerLocal)
+        if(collision.CompareTag("Apple")&& playerLocal)
         {
-            gameManager.photonView.RPC("AddScore", RpcTarget.All);
-
-            apple.photonView.RPC("DestroyApple", RpcTarget.All);
+            int value = collision.GetComponent<Apple>().Score;
+            GameManager.instance.photonView.RPC("AddScore", RpcTarget.All);
+            collision.GetComponent<Apple>().photonView.RPC("DestroyApple", RpcTarget.All);
         }
-    }
-    
-
+    } 
 }
