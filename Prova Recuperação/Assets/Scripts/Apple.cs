@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEditor;
-using UnityEngine.SocialPlatforms.Impl;
-using Photon.Pun.Demo.PunBasics;
-using Unity.VisualScripting;
 
 public class Apple : MonoBehaviourPun
 {
     const int speed = 5;
     [SerializeField] int score;
-    private Rigidbody2D rigidbody2D;
+    Rigidbody2D rigidbody2D;
 
-    public Rigidbody2D Rb { get => rigidbody2D;}
+    public int Score { get => score; }
 
     void Start()
     {
@@ -24,26 +20,16 @@ public class Apple : MonoBehaviourPun
     {
         rigidbody2D.velocity = Vector2.down * speed;
 
-        if (transform.position.y < GameManager.instance.ScreenBounds.y)
+        if (transform.position.y < - GameManager.instance.ScreenBounds.y)
         {
-            if(photonView.IsMine)
-            {
-                PhotonNetwork.Destroy(gameObject);
-            }
+            photonView.RPC("DestroyAplle", RpcTarget.All);
         }
     }
 
-    public void DestroyAppleRPC()
-    {
-        photonView.RPC("DestroyApple", RpcTarget.AllBuffered);
-    }
 
     [PunRPC]
     public void DestroyApple()
     {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
+        Destroy(gameObject);
     } 
 }
